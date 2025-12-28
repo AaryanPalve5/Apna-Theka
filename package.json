@@ -1,0 +1,9 @@
+{
+  "name": "apnatheka-monorepo",
+  "version": "1.0.0",
+  "scripts": {
+    "install-client": "cd client && npm install",
+    "build-client": "cd client && npm run build",
+    "build": "npm run install-client && npm run build-client"
+  }
+}
