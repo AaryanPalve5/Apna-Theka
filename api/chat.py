@@ -2,6 +2,10 @@ import os
 from dotenv import load_dotenv
 from google import genai
 import data  # Imports your data.py lists
+from flask import Blueprint, request, jsonify
+
+chat_bp = Blueprint("chat", __name__)
+
 
 # --- SETUP ---
 load_dotenv()
@@ -45,6 +49,7 @@ def format_menu():
 FULL_MENU_CONTEXT = format_menu()
 
 # --- CHATBOT FUNCTION ---
+@chat_bp.route("/chat", methods=["POST"])
 def chatbot(user_query):
     if not client:
         return "⚠️ Server Error: API Key missing. Please tell the admin to check Vercel settings."
