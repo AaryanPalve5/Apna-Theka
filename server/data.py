@@ -1419,3 +1419,5 @@ whisky =[
     "image": "https://static.livcheers.com/static/content/images/liquor/LCIN01127.webp"
   },
 ]
+
+data = beers + vodka + rum + whisky
