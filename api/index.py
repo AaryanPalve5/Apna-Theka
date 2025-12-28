@@ -14,16 +14,6 @@ from chat import chatbot
 app = Flask(__name__)
 CORS(app)
 
-
-from chat import chat_bp
-from data import data_bp
-
-app.register_blueprint(chat_bp, url_prefix="/api")
-app.register_blueprint(data_bp, url_prefix="/api")
-
-def handler(request, *args):
-    return app(request.environ, lambda *x: None)
-
 @app.route('/api/beers', methods=['GET'])
 def get_beers():
     return jsonify(beers)
