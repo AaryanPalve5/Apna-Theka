@@ -1,11 +1,6 @@
 {
-  "functions": {
-    "api/index.py": {
-      "runtime": "vercel-python@0.5.0"
-    }
-  },
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/index.py" },
-    { "source": "/(.*)", "destination": "/client/index.html" }
+    { "source": "/(.*)", "destination": "/client/dist/index.html" }
   ]
 }
