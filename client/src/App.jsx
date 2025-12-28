@@ -7,7 +7,8 @@ import Footer from './components/Footer';
 import { Filter, ArrowDownUp, Beer, Wine, GlassWater, Martini, Sparkles, Star, Quote, ArrowRight, Barrel } from 'lucide-react';
 import { motion } from 'framer-motion';
 import ChatInterface from './components/ChatInterface';
-const API_BASE = '';
+const API_BASE = import.meta.env.PROD ? '' : 'http://localhost:5000';
+
 function App() {
   const [view, setView] = useState('home');
   const [activeCategory, setActiveCategory] = useState('Beer');
