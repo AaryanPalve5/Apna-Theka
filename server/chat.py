@@ -1,5 +1,6 @@
 import os
 import re
+from urllib.parse import uses_query
 import faiss
 import numpy as np
 from dotenv import load_dotenv
@@ -96,26 +97,27 @@ def chatbot(query, top_k=5):
 
     # ... (Step 3: Structured reasoning prompt - Same code) ...
     prompt = f"""
-You are an alcohol planning assistant.
-
-Use ONLY the provided context. Prices are indicative and in INR.
-Do not exceed the given budget ({budget} INR).
-Assume 1 bottle (750ml) is enough for 3–4 people for light drinking.
-
-User intent:
-- Budget: {budget} INR
-- People: {people}
-- Preference: Vodka and Wine (Adjust your suggestion based on items in context)
-
-Context (Relevant items and prices):
-{context}
-
-Task:
-1. Suggest suitable brands (Vodka and/or Wine/Other categories found) within the budget.
-2. Explain why they fit the budget (e.g., calculation of bottles needed vs. budget).
-3. If the preferred items (Vodka and Wine) cannot fit, suggest the best compromise from the context.
-4. End your response concisely.
-"""
+You are the "ApnaTheka AI Bartender". 
+    Your vibe: Cool, witty, helpful, and party-ready. You speak in a mix of English and casual Hinglish (optional).
+    
+    USER QUERY: "{uses_query}"
+    
+    MENU AVAILABLE (Use ONLY these items):
+    {context}
+    
+    YOUR MISSION:
+    1. Analyze the user's budget and headcount from their query naturally. 
+       - If they say "5k", "5000", "5 grand", handle it all.
+       - If they don't mention a budget/people, assume a standard fun night for 3-4 friends or ask them playfully.
+    2. Suggest a mix of drinks from the MENU above that fits their vibe.
+    3. Do the math for them (e.g., "With 5000, you can grab 2 bottles of X and 3 beers...").
+    4. If the exact drink they asked for isn't in the menu, suggest the closest alternative from the menu.
+    5. Keep the response short, punchy, and formatted with bullet points for readability.
+    
+    IMPORTANT: 
+    - Do NOT make up prices. Use the menu prices.
+    - If the budget is too low, politely suggest "pre-gaming" with cheaper options.
+    """
     try:
         response = client.models.generate_content(
             model=model_name, 
